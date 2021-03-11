@@ -1,6 +1,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Posts</title>
     <meta charset="utf-8" />
@@ -14,7 +15,1297 @@
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
+<body class="is-preload">
 
+    
+        <div id="wrapper">
+
+            
+                <header id="header">
+                    <div class="logo">
+                        <a href="https://themes.gohugo.io//theme/hugo-theme-dimension/"><span class="icon fa-"></span></a>
+                    </div>
+                    <div class="content">
+                        <div class="inner">
+                            <h1>Posts</h1>
+                            
+                        </div>
+                    </div>
+                    <nav>
+                        <ul>
+                            
+                                
+                                    
+                                        <li>
+                                            <a href="#emoji-support">Emoji Support</a>
+                                        </li>
+                                    
+                                
+                            
+                                
+                                    
+                                        <li>
+                                            <a href="#math-typesetting">Math Typesetting</a>
+                                        </li>
+                                    
+                                
+                            
+                                
+                                    
+                                        <li>
+                                            <a href="#placeholder-text">Placeholder Text</a>
+                                        </li>
+                                    
+                                
+                            
+                                
+                                    
+                                        <li>
+                                            <a href="#rich-content">Rich Content</a>
+                                        </li>
+                                    
+                                
+                            
+                                
+                                    
+                                        <li>
+                                            <a href="#markdown-syntax-guide">Markdown Syntax Guide</a>
+                                        </li>
+                                    
+                                
+                            
+                        </ul>
+                    </nav>
+                </header>
+
+            
+                <div id="main">
+
+                    
+                        
+                            
+                                <article id="markdown-syntax-guide">
+                                    
+
+
+<div class="container mt-3">
+
+
+<button onclick="myFunction()">white mod</button>
+
+<h1>CentOS 7'ye OwnCloud Server Kurulumu</h1>
+
+	<script id="asciicast-hKVUKURAGkYOESkLMHaDmkH1w" src="https://asciinema.org/a/hKVUKURAGkYOESkLMHaDmkH1w.js" async></script>
+	
+		    </div>
+
+	
+<div class="container mt-3">
+	
+	
+<a href="http://35.192.111.94/owncloud/index.php/login"><input type="submit" value="Kurduğum OwnCloud servisi"></a>
+	
+	
+
+	    </div>
+<div class="container mt-3">
+
+	
+Bu yazımda GNU/Linux sistem yönetimi çalışmalarımda öğrendiklerimi pekiştirmek amacıyla Google Cloud'dan ücretsiz olarak kiraladığım Centos Linux'un içine kurduğum Owncloud serverinden bahsedeceğim.
+
+    </div>
+    
+    <div class="container mt-3">
+    
+<h2>OwnCloud Nedir?</h2>
+
+OwnCloud, açık kaynak kodlu dosya barındırma sistemidir. Kullanıcılar OwnCloud'u özel bir sunucu içerisine kurarak hiçbir ücret ödemeden (yazılıma) kullanabilir.
+
+<p><a href="https://tr.wikipedia.org/wiki/OwnCloud ">wiki</a></p>
+
+<p><a href="https://owncloud.com/faq/">owncloud</a></p>
+	    
+    </div>
+    
+    <div class="container mt-3">
+
+<h2>Google Cloud üzerinde örnek makine oluşturma</h2>
+
+
+ Ben 3 ay 300$ dolar kupon hakkı ile kiraladığım Google Cloud'a kurulum gerçekleştiriyorum.
+ <ul> </ul>
+<ul><li> https://cloud.google.com/ da konsol git diyerek başlayalım.</li></ul>
+<ul><li> Compute Engine seçip ve örnek şablon oluştur seçelim. </li></ul>
+<ul><li> Makinemize ad verelim, ad verirken küçük harf ve boşluk olmadan yazmaya dikkat edelim.</li></ul>
+<ul><li> Dizilerde CPU platform seçimini yapalım. Ben CPU platform seçiminde E2 (Müsaitlik durumuna göre CPU platformunu seçtim) olanını seçtim.</li></ul>
+<ul><li> Makine türünde ise vCPU çekirdek sayısını ve belleğini seçelim.&lt;</li></ul>
+<ul><li> Ben paylaşılan çekirdeklerden e2 - medium (2 vCPU 4 GB bellek) olanı seçtim.</li></ul>
+<ul><li> Ön yükleme diskinde ise İşletim sistemi, işletim sistemi sürümü, disk türü ve disk boyutunu seçiyoruz. Ben İşletim sistemi olarak Centos sürümü olarak Centos 7'yi, disk türü olarak standart kalıcı disk'i ve boyut olarak da 20 GB disk boyutu verdim.</li></ul>
+<ul><li> Güvenlik duvarı izinlerimiz de verelim ve makinemizi oluşturalım.</li></ul>
+
+	    <p><a href="https://cloud.google.com/">Google Cloud</a></p>
+
+    </div>
+
+    <div class="container mt-3">
+<picture>
+  <source media="(min-width:650px)" srcset="1.resim.jpg">
+  <source media="(min-width:465px)" srcset="1.resim.jpg">
+  <img src="1.resim.jpg" alt="Flowers" style="width:auto;">
+</picture>
+    </div>
+<div class="container mt-3">
+<h3>SSH Ayarları</h3>
+
+
+<div class="container mt-3">
+<ul><li> SSH ayarımız için sanal makinemizin üzerine tıklayarak sanal makine örneği ayrıntıları sayfasına gelelim ve o sayfada düzenle yazısını seçelim. </li> </ul>
+<ul><li> Düzenle sayfasında SSH Anahtarlarını seçelim.</li></ul>
+</div>
+
+<pre><code class="language-bash">
+$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/kullanıcı/.ssh/id_rsa): owncloud1
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in owncloud1
+Your public key has been saved in owncloud1.pub
+The key fingerprint is:
+SHA256:H1Zboaqte7HwesFLDL/4nsuOYy8Uy3Olu6va7IQcBBg m3t@manjaro
+The key's randomart image is:
++---[RSA 3072]----+
+|  Eo.         .  |
+|  .  .       . . |
+|      .     o .  |
+|     .  o  o.o   |
+|      ..SB+o.    |
+|     . o*=X.     |
+|      o.oBoB     |
+|       +=+O.     |
+|      .+X&amp;@+     |
++----[SHA256]-----+
+</code></pre>
+
+<ul><li>Linux terminalimde ssh-keygen ile SSH keylerimi oluşturdum.</li></ul>
+
+<ul><li>Owncloud1 adında bir key oluşturdum. Boş bırakırsak /home/kullanıcı/. ssh/ altına id_rsa. pub adında Public key hem de id_rsa adında Private key oluşturur.</li></ul>
+<ul><li>Keylere parola vermeden işlem yaptım ve çıktım.</li></ul>
+
+
+
+<pre><code class="language-bash">
+$ cat owncloud1.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDT7dRdtznSP6QUSFmyeQRj25S+7EmrjoBEyt7MiXzwsP6MkRRRPy8oFHMzvgf+he3acdgRpXP3wW7ewBtXhxu2DMbZp53sAnxgDa5nvC8E/2yNc90KEZQABrPDEQDvrGFF+qSPFCl7QpR9KnABoRii10cwGGiqIwNzhUMt5fWXRNweTdstR/uAj607a9rDzFB2TNMSYelw57dzRzM9m763jUzNwl/kfl46k7/VZ9PMr7Sogrb+V0zf17iVHai01vZU8zEB2fu9RBEb2KqJJ4dtFGSsn4XDKeEPHTmn8xzpauixVi0klFYhGIaBJ3TrkuOoJEg2ei9Xg7ZX1MshJV4ceTh6Xy4l1iksTIvXDyw8rZ+3UXwSy008FkYhQIlTiZjw1LAKJVJIiae6I+3YpTn9vEx1ibEmRFPr4CdDtXt4/nkNIb0myk1PM+lkV7TtrvbWy+Cn2Htbt/LvQQ7RqB4h+5rQw+toCndQMUlpNjVl10a/tVfGQsMD/ML2F1+iHf0= m3t@manjaro
+$
+</code></pre>
+
+
+<ul><li>Owncloud1. pub Public keyi kopyalayalım ve Googlecloud'daki SSH anahtarları yerine yapıştıralım ve kaydedelim.</li> </ul>
+
+<pre><code class="language-bash">
+$ ssh -i owncloud1 m3t@34.69.43.29
+</code></pre>
+
+<ul><li>Ssh - i ile Private key dosya ismini, kullanıcı adımızı ve Google Cloud'daki harici ipimizi vererek artık giriş yapabiliriz.</li> </ul>
+
+<pre><code class="language-bash">
+m3t@owncloud2 ~]$ sudo passwd
+Changing password for user root.
+New password:
+</code></pre>
+
+
+<ul><li>Sisteme girdikten sonra "sudo passwd " komutu ile root parolası oluşturalım
+Arrtık ssh ile sistemimize girip OwnCloud kurabiliriz.</li> </ul>
+
+    </div>
+
+    <div class="container mt-3">
+
+<h2>Hadi Başlıyalım</h2>
+
+<h3>Kurulum Gereksinimleri</h3>
+
+
+<ul><li>PHP 7.2</li></ul>
+
+<ul><li>Apache Web Server</li></ul>
+
+<ul><li>MariaDB MariaDB Server</li></ul>
+
+<ul><li>OwnCloud server kurulum dosyası</li></ul>
+
+Gereksinim listemizde hazır olduğuna göre artık gereksinimleri indirip kurmaya başlayalım.
+
+    </div>
+
+    <div class="container mt-3">
+
+<h3>PHP 7.2 - Apache Web Server Kurulumu</h3>
+
+<ul><li>"yum install epel-release" komutu ile epel ("Extra Packages for Enterprise Linux" topluluk temelli repo projedir) reposunu kuruyoruz.</li></ul>
+<ul><li>"yum install yum-utils" komutu ile yum-config-manager’ı kullanmak için yum-utils paketini kuruyoruz ,"-y" komutunu ise bizden yes komut istememesi için veriyoruz.</li></ul>
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# yum install epel-release yum-utils -y
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+epel/x86_64/metalink                                                                                                                                                   |  16 kB  00:00:00     
+ * base: mirrors.gigenet.com
+ * epel: mirror.genesisadaptive.com
+ * extras: repos.forethought.net
+ * updates: ftp.ussg.iu.edu
+base                                                                                                                                                                   | 3.6 kB  00:00:00     
+epel                                                                                                                                                                   | 4.7 kB  00:00:00     
+extras                                                                                                                                                                 | 2.9 kB  00:00:00     
+google-cloud-sdk/signature                                                                                                                                             |  844 B  00:00:00     
+google-cloud-sdk/signature                                                                                                                                             | 1.4 kB  00:00:00 !!! 
+google-compute-engine/signature                                                                                                                                        |  844 B  00:00:00     
+google-compute-engine/signature                                                                                                                                        | 1.4 kB  00:00:00 !!! 
+updates                                                                                                                                                                | 2.9 kB  00:00:00     
+(1/9): base/7/x86_64/group_gz                                                                                                                                          | 153 kB  00:00:00     
+(2/9): base/7/x86_64/primary_db                                                                                                                                        | 6.1 MB  00:00:00     
+
+==============================================================================================================================================================================================
+Install  1 Package (+3 Dependent packages)
+
+Total download size: 863 k
+Installed size: 4.3 M
+Downloading packages:
+(1/4): libxml2-python-2.9.1-6.el7.5.x86_64.rpm                                                                                                                         | 247 kB  00:00:00     
+(2/4): python-chardet-2.2.1-3.el7.noarch.rpm                                                                                                                           | 227 kB  00:00:00     
+(3/4): yum-utils-1.1.31-54.el7_8.noarch.rpm                                                                                                                            | 122 kB  00:00:00     
+(4/4): python-kitchen-1.1.1-5.el7.noarch.rpm                                                                                                                           | 267 kB  00:00:00     
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                                                         2.5 MB/s | 863 kB  00:00:00     
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : python-chardet-2.2.1-3.el7.noarch                                                                                                                                          1/4 
+  Installing : python-kitchen-1.1.1-5.el7.noarch                                                                                                                                          2/4 
+  Installing : libxml2-python-2.9.1-6.el7.5.x86_64                                                                                                                                        3/4 
+  Installing : yum-utils-1.1.31-54.el7_8.noarch                                                                                                                                           4/4 
+  Verifying  : libxml2-python-2.9.1-6.el7.5.x86_64                                                                                                                                        1/4 
+  Verifying  : python-kitchen-1.1.1-5.el7.noarch                                                                                                                                          2/4 
+  Verifying  : yum-utils-1.1.31-54.el7_8.noarch                                                                                                                                           3/4 
+  Verifying  : python-chardet-2.2.1-3.el7.noarch                                                                                                                                          4/4 
+
+Installed:
+  yum-utils.noarch 0:1.1.31-54.el7_8                                                                                                                                                          
+
+Dependency Installed:
+  libxml2-python.x86_64 0:2.9.1-6.el7.5                           python-chardet.noarch 0:2.2.1-3.el7                           python-kitchen.noarch 0:1.1.1-5.el7                          
+</code></pre>
+
+<ul><li>"yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y" komutu ile güncel repoyu çekiyoruz.</li></ul>
+
+<pre><code class="language-bash">
+[root@owncloud m3t]#yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
+Loaded plugins: fastestmirror
+remi-release-7.rpm                                                                                                                                                     |  20 kB  00:00:00     
+Examining /var/tmp/yum-root-4Z_a_v/remi-release-7.rpm: remi-release-7.8-1.el7.remi.noarch
+Marking /var/tmp/yum-root-4Z_a_v/remi-release-7.rpm to be installed
+Resolving Dependencies
+--&gt; Running transaction check
+---&gt; Package remi-release.noarch 0:7.8-1.el7.remi will be installed
+--&gt; Finished Dependency Resolution
+
+Dependencies Resolved
+
+==============================================================================================================================================================================================
+ Package                                       Arch                                    Version                                         Repository                                        Size
+==============================================================================================================================================================================================
+Installing:
+ remi-release                                  noarch                                  7.8-1.el7.remi                                  /remi-release-7                                   28 k
+
+Transaction Summary
+==============================================================================================================================================================================================
+Install  1 Package
+
+Total size: 28 k
+Installed size: 28 k
+Downloading packages:
+Running transaction check
+Running transaction test
+Transaction test succeeded
+Running transaction
+  Installing : remi-release-7.8-1.el7.remi.noarch                                                                                                                                         1/1 
+  Verifying  : remi-release-7.8-1.el7.remi.noarch                                                                                                                                         1/1 
+
+Installed:
+  remi-release.noarch 0:7.8-1.el7.remi                                                                                                                             </http:></code></pre>
+
+ 
+<ul><li>"yum-config-manager --enable remi-php72" repodaki php72 aktif ediyoruz.</li></ul>
+
+
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# yum-config-manager --enable remi-php72 
+Loaded plugins: fastestmirror
+====================================================================================== repo: remi-php72 ======================================================================================
+[remi-php72]
+async = True
+bandwidth = 0
+base_persistdir = /var/lib/yum/repos/x86_64/7
+baseurl = 
+cache = 0
+cachedir = /var/cache/yum/x86_64/7/remi-php72
+...
+ssl_check_cert_permissions = True
+sslcacert = 
+sslclientcert = 
+sslclientkey = 
+sslverify = True
+throttle = 0
+timeout = 30.0
+ui_id = remi-php72
+ui_repoid_vars = releasever,
+   basearch
+username 
+</code></pre>
+
+
+<ul><li>"yum install httpd php php-mysql php-intl sqlite php-dom php-mbstring php-gd php-pdo php-json php-xml php-zip php-gd curl php-curl php-mcrypt php-pear -y" php ve diğer gerekli bağımlılıkları ve httpd (Apache Web Server) kuruyoruz.</li></ul>
+
+
+<pre><code class="language-bash">
+
+root@owncloud m3t]# yum install httpd php php-mysql php-intl sqlite php-dom php-mbstring php-gd php-pdo php-json php-xml php-zip php-gd curl php-curl php-mcrypt php-pear -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: mirrors.gigenet.com
+ * epel: mirror.genesisadaptive.com
+ * extras: repos.forethought.net
+ * remi-php72: mirror.team-cymru.com
+ * remi-safe: mirror.team-cymru.com
+ * updates: ftp.ussg.iu.edu
+remi-php72                                                                                                                                                             | 3.0 kB  00:00:00     
+....
+Dependency Installed:
+  apr.x86_64 0:1.4.8-7.el7                  apr-util.x86_64 0:1.5.2-6.el7                      dejavu-fonts-common.noarch 0:2.33-6.el7         dejavu-sans-fonts.noarch 0:2.33-6.el7         
+  fontconfig.x86_64 0:2.13.0-4.3.el7        fontpackages-filesystem.noarch 0:1.44-8.el7        fribidi.x86_64 0:1.0.2-1.el7_7.1                gd-last.x86_64 0:2.3.0-2.el7.remi             
+  graphite2.x86_64 0:1.3.10-1.el7_3         harfbuzz.x86_64 0:1.7.5-2.el7                      httpd-tools.x86_64 0:2.4.6-97.el7.centos        jbigkit-libs.x86_64 0:2.0-11.el7              
+  libX11.x86_64 0:1.6.7-3.el7_9             libX11-common.noarch 0:1.6.7-3.el7_9               libXau.x86_64 0:1.0.8-2.1.el7                   libXpm.x86_64 0:3.5.12-1.el7                  
+  libargon2.x86_64 0:20161029-3.el7         libicu65.x86_64 0:65.1-1.el7.remi                  libjpeg-turbo.x86_64 0:1.2.90-8.el7             libmcrypt.x86_64 0:2.5.8-13.el7               
+  libraqm.x86_64 0:0.7.0-4.el7              libtiff.x86_64 0:4.0.3-35.el7                      libwebp7.x86_64 0:1.0.3-1.el7.remi              libxcb.x86_64 0:1.13-1.el7                    
+  libxslt.x86_64 0:1.1.28-6.el7             libzip5.x86_64 0:1.7.3-1.el7.remi                  mailcap.noarch 0:2.1.41-2.el7                   oniguruma5php.x86_64 0:6.9.6-1.el7.remi       
+  php-cli.x86_64 0:7.2.34-1.el7.remi        php-fedora-autoloader.noarch 0:1.0.1-2.el7         php-process.x86_64 0:7.2.34-1.el7.remi         
+
+</code></pre>
+
+<ul><li>"systemctl start httpd" komutu ile apache web servisini başlatıyoruz.</li></ul>
+<ul><li>"systemctl enable httpd" komutunu apache web servisini sistem önyüklemesi gerçekleştiğinde çalışacak şekilde ayarlamak için veriyoruz.</li></ul>
+<ul><li>"systemctl status httpd" komutunu apache web servisini durumunu öğrenmek için veriyoruz.</li></ul>
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# systemctl start httpd
+[root@owncloud m3t]# systemctl enable httpd
+Created symlink from /etc/systemd/system/multi-user.target.wants/httpd.service to /usr/lib/systemd/system/httpd.service.
+[root@owncloud m3t]# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; enabled; vendor preset: disabled)
+   Active: active (running) since Mon 2020-12-21 18:53:47 UTC; 31s ago
+     Docs: man:httpd(8)
+           man:apachectl(8)
+ Main PID: 1646 (httpd)
+   Status: "Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"
+   CGroup: /system.slice/httpd.service
+           ├─1646 /usr/sbin/httpd -DFOREGROUND
+           ├─1647 /usr/sbin/httpd -DFOREGROUND
+           ├─1648 /usr/sbin/httpd -DFOREGROUND
+           ├─1649 /usr/sbin/httpd -DFOREGROUND
+           ├─1650 /usr/sbin/httpd -DFOREGROUND
+           └─1651 /usr/sbin/httpd -DFOREGROUND
+
+Dec 21 18:53:47 owncloud systemd[1]: Starting The Apache HTTP Server...
+Dec 21 18:53:47 owncloud systemd[1]: Started The Apache HTTP Server.
+</code></pre>
+
+    </div>
+
+    <div class="container mt-3">
+
+<h3>MariaDB - MariaDB Server Kurulumu</h3>
+
+<ul><li>"yum install mariadb-server mariadb -y" komut ile MariaDB ve MariaDB serverini kuruyoruz.</li></ul>
+<pre><code class="language-bash">
+[root@owncloud m3t]# yum install mariadb-server mariadb -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: mirrors.gigenet.com
+ * epel: mirror.genesisadaptive.com
+ * extras: repos.forethought.net
+......
+==============================================================================================================================================================================================
+ Package                                                  Arch                                    Version                                         Repository                             Size
+==============================================================================================================================================================================================
+Installing:
+ mariadb                                                  x86_64                                  1:5.5.68-1.el7                                  base                                  8.8 M
+ mariadb-server                                           x86_64                                  1:5.5.68-1.el7                                  base                                   11 M
+Installing for dependencies:
+ libaio                                                   x86_64                                  0.3.109-13.el7                                  base                                   24 k
+ perl-Compress-Raw-Bzip2                                  x86_64                                  2.061-3.el7                                     base                                   32 k
+ perl-Compress-Raw-Zlib                                   x86_64                                  1:2.061-4.el7                                   base                                   57 k
+ perl-DBD-MySQL                                           x86_64                                  4.023-6.el7                                     base                                  140 k
+ perl-DBI                                                 x86_64                                  1.627-4.el7                                     base                                  802 k
+ perl-Data-Dumper                                         x86_64                                  2.145-3.el7                                     base                                   47 k
+ perl-IO-Compress                                         noarch                                  2.061-2.el7                                     base                                  260 k
+ perl-Net-Daemon                                          noarch                                  0.48-5.el7                                      base                                   51 k
+ perl-PlRPC                                               noarch                                  0.2020-14.el7                                   base                                   36 k
+
+Transaction Summary
+==============================================================================================================================================================================================
+Install  2 Packages (+9 Dependent packages)
+.....
+Installed:
+  mariadb.x86_64 1:5.5.68-1.el7                                                              mariadb-server.x86_64 1:5.5.68-1.el7                                                             
+
+Dependency Installed:
+  libaio.x86_64 0:0.3.109-13.el7           perl-Compress-Raw-Bzip2.x86_64 0:2.061-3.el7        perl-Compress-Raw-Zlib.x86_64 1:2.061-4.el7        perl-DBD-MySQL.x86_64 0:4.023-6.el7       
+  perl-DBI.x86_64 0:1.627-4.el7            perl-Data-Dumper.x86_64 0:2.145-3.el7               perl-IO-Compress.noarch 0:2.061-2.el7              perl-Net-Daemon.noarch 0:0.48-5.el7       
+  perl-PlRPC.noarch 0:0.2020-14.el7  
+</code></pre>
+
+
+<ul><li>"systemctl start mariadb.service" komutu ile MariaDB servisini başlatıyoruz.</li></ul>
+<ul><li>"systemctl enable mariadb.service" komutunu MariaDB servisini sistem önyüklemesi gerçekleştiğinde çalışacak şekilde ayarlamak için veriyoruz.</li></ul>
+<ul><li>"systemctl status mariadb.service" komutunu MariaDB servisini durumunu öğrenmek için veriyoruz.</li></ul>
+
+	    <p><a href="https://httpd.apache.org/docs/2.4/install.html">Apache server kurlumu</a></p>
+
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# systemctl start mariadb.service
+[root@owncloud m3t]# systemctl enable mariadb.service
+Created symlink from /etc/systemd/system/multi-user.target.wants/mariadb.service to /usr/lib/systemd/system/mariadb.service.
+[root@owncloud m3t]# systemctl status mariadb.service
+● mariadb.service - MariaDB database server
+   Loaded: loaded (/usr/lib/systemd/system/mariadb.service; enabled; vendor preset: disabled)
+   Active: active (running) since Mon 2020-12-21 19:05:01 UTC; 21s ago
+ Main PID: 2010 (mysqld_safe)
+   CGroup: /system.slice/mariadb.service
+           ├─2010 /bin/sh /usr/bin/mysqld_safe --basedir=/usr
+           └─2175 /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --plugin-dir=/usr/lib64/mysql/plugin --log-error=/var/log/mariadb/mariadb.log --pid-file=/var/run/mariadb/mar...
+
+Dec 21 19:04:59 owncloud mariadb-prepare-db-dir[1928]: which will also give you the option of removing the test
+Dec 21 19:04:59 owncloud mariadb-prepare-db-dir[1928]: databases and anonymous user created by default.  This is
+Dec 21 19:04:59 owncloud mariadb-prepare-db-dir[1928]: strongly recommended for production servers.
+Dec 21 19:04:59 owncloud mariadb-prepare-db-dir[1928]: See the MariaDB Knowledgebase at <http: mariadb.com="" kb=""> or the
+Dec 21 19:04:59 owncloud mariadb-prepare-db-dir[1928]: MySQL manual for more instructions.
+Dec 21 19:04:59 owncloud mariadb-prepare-db-dir[1928]: Please report any problems at <http: mariadb.org="" jira="">
+Dec 21 19:04:59 owncloud mariadb-prepare-db-dir[1928]: The latest information about MariaDB is available at <http: mariadb.org="">.
+Dec 21 19:04:59 owncloud mysqld_safe[2010]: 201221 19:04:59 mysqld_safe Logging to '/var/log/mariadb/mariadb.log'.
+Dec 21 19:04:59 owncloud mysqld_safe[2010]: 201221 19:04:59 mysqld_safe Starting mysqld daemon with databases from /var/lib/mysql
+
+Dec 21 19:05:01 owncloud systemd[1]: Started MariaDB database server.
+
+[root@owncloud m3t]#
+</http:></http:></http:></code></pre>
+
+
+
+<ul><li>"mysql_secure_installation" bu scprit kurulum sonrasında bazı varsayılan ayarlardan kurtulmamızı sağlar.</li></ul>
+<ul><li>"Enter current password for root (enter for none): " root@localhost için mevcut şifreyi girin yerini boş bırakıyorum.</li></ul>
+<ul><li>"Set root password? [Y/n] " root@localhost parolası belirlensin mi sorusuna hayır diyorum (Bu bir test kurulumu olduğu için bunlara önem vermiyorum yoksa root parolası verilmelidir.)</li></ul>
+<ul><li>"Remove anonymous users? [Y/n] " anonim kullanıcıları kaldırılsın mı sorusuna hayır diyorum.</li></ul>
+<ul><li>"Disallow root login remotely? [Y/n] " root@localhost uzakdan eşirimi verilmesin sorusuna evet diyorum</li></ul>
+<ul><li>"Remove test database and access to it? [Y/n]" test veritabanı kaldırılsın ve ona erişim sağlansın mı sorusuna evet diyorum.</li></ul>
+<ul><li>"Reload privilege tables now? [Y/n] " privilege tablosunu güncellensin mi sorusuna evet diyorum.</li></ul>
+
+	    <p><a href="https://mariadb.com/kb/en/mysql_secure_installation/">Mariadb secure installation</a></p>
+
+	    
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# mysql_secure_installation
+
+NOTE: RUNNING ALL PARTS OF THIS SCRIPT IS RECOMMENDED FOR ALL MariaDB
+      SERVERS IN PRODUCTION USE!  PLEASE READ EACH STEP CAREFULLY!
+
+In order to log into MariaDB to secure it, we'll need the current
+password for the root user.  If you've just installed MariaDB, and
+you haven't set the root password yet, the password will be blank,
+so you should just press enter here.
+
+Enter current password for root (enter for none): 
+OK, successfully used password, moving on...
+
+Setting the root password ensures that nobody can log into the MariaDB
+root user without the proper authorisation.
+
+Set root password? [Y/n] n
+ ... skipping.
+
+By default, a MariaDB installation has an anonymous user, allowing anyone
+to log into MariaDB without having to have a user account created for
+them.  This is intended only for testing, and to make the installation
+go a bit smoother.  You should remove them before moving into a
+production environment.
+
+Remove anonymous users? [Y/n] n
+ ... skipping.
+
+Normally, root should only be allowed to connect from 'localhost'.  This
+ensures that someone cannot guess at the root password from the network.
+
+Disallow root login remotely? [Y/n] y
+ ... Success!
+
+By default, MariaDB comes with a database named 'test' that anyone can
+access.  This is also intended only for testing, and should be removed
+before moving into a production environment.
+
+Remove test database and access to it? [Y/n] y
+ - Dropping test database...
+ ... Success!
+ - Removing privileges on test database...
+ ... Success!
+
+Reloading the privilege tables will ensure that all changes made so far
+will take effect immediately.
+
+Reload privilege tables now? [Y/n] y
+ ... Success!
+
+Cleaning up...
+
+All done!  If you've completed all of the above steps, your MariaDB
+installation should now be secure.
+
+Thanks for using MariaDB!
+</code></pre>
+
+    </div>
+
+    <div class="container mt-3">
+
+<h3>OwnCloud İçin Veritabanının Oluşturulması </h3>
+
+
+Veri tabanımızı ve kullanıcımızı oluşturmak için MariaDB başlatıyoruz. (MariaDB başlatmak için terminale mysql komutunu veriyoruz)
+<ul></ul>
+<ul><li>"MariaDB [(none)]&gt; SELECT PASSWORD('ownpasswd');" Localhost için oluşturacağımız kullanıcı için bir parola (ownpasswd) hash oluştururuz.</li></ul>
+<ul><li>"MariaDB [(none)]&gt; CREATE USER user@localhost IDENTIFIED BY PASSWORD '*F612AA5D6742DAFF619C7C4818632B082901B8AC';" Localhost için kullanıcı adını (kullanıcı adı user ) ve parola hash (*F612AA5D6742DAFF619C7C4818632B082901B8AC) yazarak bir kullanıcı oluştururuz.</li></ul>
+<ul><li>MariaDB [(none)]&gt; SELECT host, user FROM mysql.user; Sunucu üzerindeki kullanıcıları ve oturum açabilecekleri hostları görmek içi bu komutu yazarız.</li></ul>
+<ul><li>"MariaDB [(none)]&gt; CREATE DATABASE own_db; Veri tabanının adını (own_db ) vererek bir veri tabanı oluştururuz.</li></ul>
+<ul><li>"MariaDB [(none)]&gt; SHOW DATABASES;" Oluşan veri tabanımızı kontrol etmek için sunucudaki tüm veri tabanlarını listeliyoruz.</li></ul>
+<ul><li>"MariaDB [(none)]&gt; SHOW GRANTS FOR user@localhost;" Oluşturduğumuz kullanıcının (user) yetkilerini kontrol ederiz.</li></ul>
+<ul><li>"MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON own_db.* TO user@localhost IDENTIFIED BY PASSWORD '*F612AA5D6742DAFF619C7C4818632B082901B8AC'; " Oluşturduğumuz kulanıcıya (user) oluşturduğumuz veri tabını (own_db) tabloları için tüm yetkileri veririz.</li></ul>
+<ul><li>"FLUSH PRIVILEGES;" MariaDB’nin izinlerle ilgili tuttuğu ön belleği temizliyoruz.</li></ul>
+<ul><li>MariaDB [(none)]&gt; SHOW GRANTS FOR user@localhost; Yetkileri verdikten sonra tekrar kontrol ediyoruz.</li></ul>
+<ul><li>Kullanıcımızı ve veri tabanımızı oluşturduğumuz için "exit" yazıp bu işlemlerden çıkıyoruz.</li></ul>
+
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# mysql
+Welcome to the MariaDB monitor.  Commands end with ; or \\g.
+Your MariaDB connection id is 9
+Server version: 5.5.68-MariaDB MariaDB Server
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\\h' for help. Type '\\c' to clear the current input statement.
+
+MariaDB [(none)]&gt; SELECT PASSWORD('ownpasswd');
++-------------------------------------------+
+| PASSWORD('ownpasswd')                     |
++-------------------------------------------+
+| *F612AA5D6742DAFF619C7C4818632B082901B8AC |
++-------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]&gt; CREATE USER user@localhost IDENTIFIED BY PASSWORD '*F612AA5D6742DAFF619C7C4818632B082901B8AC';
+Query OK, 0 rows affected (0.01 sec)
+
+MariaDB [(none)]&gt; SELECT host, user FROM mysql.user;
++-----------+------+
+| host      | user |
++-----------+------+
+| 127.0.0.1 | root |
+| ::1       | root |
+| localhost |      |
+| localhost | root |
+| localhost | user |
+| owncloud  |      |
++-----------+------+
+6 rows in set (0.00 sec)
+
+MariaDB [(none)]&gt; CREATE DATABASE own_db;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]&gt; SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| own_db             |
+| performance_schema |
++--------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [(none)]&gt; SHOW GRANTS FOR user@localhost;
++-------------------------------------------------------------------------------------------------------------+
+| Grants for user@localhost                                                                                   |
++-------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'user'@'localhost' IDENTIFIED BY PASSWORD '*F612AA5D6742DAFF619C7C4818632B082901B8AC' |
++-------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [(none)]&gt; GRANT ALL PRIVILEGES ON own_db.* TO user@localhost IDENTIFIED BY PASSWORD '*F612AA5D6742DAFF619C7C4818632B082901B8AC';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]&gt; FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]&gt; SHOW GRANTS FOR user@localhost;
++-------------------------------------------------------------------------------------------------------------+
+| Grants for user@localhost                                                                                   |
++-------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'user'@'localhost' IDENTIFIED BY PASSWORD '*F612AA5D6742DAFF619C7C4818632B082901B8AC' |
+| GRANT ALL PRIVILEGES ON `own_db`.* TO 'user'@'localhost'                                                    |
++-------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [(none)]&gt; exit
+Bye
+</code></pre>
+
+    </div>
+
+    <div class="container mt-3">
+
+<h3>OwnCloud'ın Kurulumu</h3>
+
+
+
+<ul><li>"sudo rpm --import https://download.owncloud.org/download/repositories/production/CentOS_7/repodata/repomd.xml.key" OwnCloud dosyalarını indirmek için keyini alırız.</li></ul>
+<ul><li>"sudo wget http://download.owncloud.org/download/repositories/production/CentOS_7/ce:stable.repo -O /etc/yum.repos.d/ce:stable.repo" Wget yardımı ile OwnCloud dosyalarını indiriyoruz.</li></ul>
+<ul><li>"sudo yum clean all " Yum reposunu temizliyoruz.</li></ul>
+<ul><li>"sudo yum install owncloud-complete-files" OwncCloud kurulumunu gerçekleştiriyoruz.</li></ul>
+
+<p><a href="https://download.owncloud.org/download/repositories/production/owncloud">owncloud kurlumu</a></p>
+
+<p><a href="https://owncloud.com/download-server/">owncloud kurulum dosyası</a></p>
+
+<pre><code class="language-bash">
+[root@owncloud m3t]#sudo rpm --import https://download.owncloud.org/download/repositories/production/CentOS_7/repodata/repomd.xml.key
+[root@owncloud m3t]#sudo wget http://download.owncloud.org/download/repositories/production/CentOS_7/ce:stable.repo -O /etc/yum.repos.d/ce:stable.repo
+--2020-12-21 20:31:49--  http://download.owncloud.org/download/repositories/production/CentOS_7/ce:stable.repo
+--2020-12-21 20:31:49--  <http: download.owncloud.org="" download="" repositories="" production="" centos_7="" ce:stable.repo="">
+Resolving download.owncloud.org (download.owncloud.org)... 167.233.14.167, 2a01:4f8:1c1d:3d1::1
+Connecting to download.owncloud.org (download.owncloud.org)|167.233.14.167|:80... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: <https: download.owncloud.org="" download="" repositories="" production="" centos_7="" ce:stable.repo=""> [following]
+--2020-12-21 20:31:50--  <https: download.owncloud.org="" download="" repositories="" production="" centos_7="" ce:stable.repo="">
+Connecting to download.owncloud.org (download.owncloud.org)|167.233.14.167|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 265 [text/plain]
+Saving to: ‘/etc/yum.repos.d/ce:stable.repo’
+
+100%[====================================================&gt;] 265         --.-K/s   in 0s      
+
+2020-12-21 20:31:50 (35.3 MB/s) - ‘/etc/yum.repos.d/ce:stable.repo’ saved [265/265]
+[root@owncloud m3t]# sudo yum clean all
+Loaded plugins: fastestmirror
+Cleaning repos: base ce_10.5 epel extras google-cloud-sdk google-compute-engine remi-php72
+              : remi-safe updates
+Cleaning up list of fastest mirrors
+[root@owncloud m3t]# 
+[root@owncloud m3t]# 
+[root@owncloud m3t]# sudo yum install owncloud-complete-files
+Loaded plugins: fastestmirror
+Determining fastest mirrors
+epel/x86_64/metalink                                                   |  16 kB  00:00:00     
+ * base: mirror.us.oneandone.net
+ * epel: mirror.steadfastnet.com
+...                                                                                                                                                                      1.4 kB  00:00:00                                                                                                                                 
+(10/12): remi-safe/primary_db                                                                                                                                          | 1.8 MB  00:00:00     
+(11/12): epel/x86_64/primary_db                                                                                                                                        | 6.9 MB  00:00:01     
+(12/12): updates/7/x86_64/primary_db                                                                                                                                   | 4.7 MB  00:00:00     
+google-cloud-sdk                                                                                                                                                                      951/951
+google-compute-engine                                                                                                                                                                   12/12
+Resolving Dependencies
+--&gt; Running transaction check
+---&gt; Package owncloud-complete-files.noarch 0:10.5.0-4.1 will be installed
+--&gt; Finished Dependency Resolution
+
+Dependencies Resolved
+
+==============================================================================================================================================================================================
+ Package                                                  Arch                                    Version                                      Repository                                Size
+==============================================================================================================================================================================================
+Installing:
+ owncloud-complete-files                                  noarch                                  10.5.0-4.1                                   ce_10.5                                   31 M
+
+Transaction Summary
+==============================================================================================================================================================================================
+Install  1 Package
+
+Total download size: 31 M
+Installed size: 155 M
+Is this ok [y/d/N]: y
+....
+Running transaction
+  Installing : owncloud-complete-files-10.5.0-4.1.noarch                                                                                                                                  1/1 
+  Verifying  : owncloud-complete-files-10.5.0-4.1.noarch                                                                                                                                  1/1 
+
+Installed:
+  owncloud-complete-files.noarch 0:10.5.0-4.1                                                                                                                                                 
+
+Complete!
+[root@owncloud m3t]#
+</https:></https:></http:></http:></https:></code></pre>
+
+    </div>
+
+    <div class="container mt-3">
+
+<h3>Firewall izinleri</h3>
+
+
+
+<ul><li>"firewall-cmd --list-all" Firewall sistemindeki izinleri kontrol ediyoruz.</li></ul>
+<ul><li>"firewall-cmd --permanent --add-service=https" Firewall'da https servisine izin veriyoruz.</li></ul>
+<ul><li>"firewall-cmd --permanent --add-service=http" Firewall'da http servisine izin veriyoruz.</li></ul>
+<ul><li>"firewall-cmd --reload" Firewall'u güncelliyoruz ki verdiğimiz izinler kaydedilsin.</li></ul>
+<ul><li>"firewall-cmd --list-all" Firewall sistemindeki izinleri tekrardan kontrol ediyoruz.</li></ul>
+
+
+
+<pre><code class="language-bash">
+ [root@owncloud m3t]# firewall-cmd --list-all
+trusted (active)
+  target: ACCEPT
+  icmp-block-inversion: no
+  interfaces: eth0
+  sources: 
+  services: 
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules: 
+ 
+[root@owncloud m3t]# firewall-cmd --permanent --add-service=https
+success
+[root@owncloud m3t]# firewall-cmd --permanent --add-service=http
+success
+[root@owncloud m3t]# firewall-cmd --reload
+success
+[root@owncloud m3t]# firewall-cmd --list-all
+trusted (active)
+  target: ACCEPT
+  icmp-block-inversion: no
+  interfaces: eth0
+  sources: 
+  services: http https
+  ports: 
+  protocols: 
+  masquerade: no
+  forward-ports: 
+  source-ports: 
+  icmp-blocks: 
+  rich rules:
+  </code></pre>
+  
+      </div>
+
+    <div class="container mt-3">
+  
+<h3>OwnCloud Dosya İzinleri</h3>
+
+
+
+<ul><li>"chown -R apache.apache /var/www/html/owncloud/" Owncloud dosyasının sahibini ve grubunu apache olarak değiştiriyoruz.</li></ul>
+
+
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# chown -R apache.apache /var/www/html/owncloud/
+[root@owncloud m3t]#
+  </code></pre>
+  
+      </div>
+  
+      <div class="container mt-3">
+
+<h3>SELinux' Konfigurasyonu</h3>
+
+
+
+SELinux konfigürasyonu yapmak için kaynakdaki komutları verirken semanage aracının olmadığı fark ediyoruz ve o aracı indirmek için hangi paketi indirmemiz gerektiğini ise "yum provides" komutu ile buluyoruz. İndireceğimiz paket "policycoreutils-python" olduğu öğrenip kuruyoruz. Kaynakta verilen komutları vererek SELinux konfigürasyonu gerçekleştiriyoruz.
+
+
+
+    </div>
+
+    <div class="container mt-3">
+
+<h3>SELinux komutları</h3>
+
+
+
+<ul><li>semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/data'</li></ul>
+<ul><li>restorecon '/var/www/html/owncloud/data'</li></ul>
+<ul><li>semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/config'</li></ul>
+<ul><li>restorecon '/var/www/html/owncloud/config'</li></ul>
+<ul><li>semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/apps'</li></ul>
+<ul><li>restorecon '/var/www/html/owncloud/apps'[root@owncloud m3t]# semanage fcontext -a -t</li></ul>
+<ul><li>httpd_sys_rw_content_t '/var/www/html/owncloud/apps-external(/.*)?'</li></ul>
+<ul><li>restorecon -Rv '/var/www/html/owncloud/'</li></ul> 
+
+<p><a href="https://doc.owncloud.com/server/admin_manual/installation/selinux_configuration.html">selinux komutları</a></p>
+
+
+<pre><code class="language-bash">
+[root@owncloud m3t]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/data'
+bash: semanage: command not found
+[root@owncloud m3t]# yum provides semanage
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: mirror.us.oneandone.net
+ * epel: mirror.steadfastnet.com
+ * extras: repos.forethought.net
+ * remi-php72: mirror.team-cymru.com
+ * remi-safe: mirror.team-cymru.com
+ * updates: centosc9.centos.org
+base/7/x86_64/filelists_db                                             | 7.2 MB  00:00:00     
+ce_10.5/filelists_db                                                   | 298 kB  00:00:00     
+epel/x86_64/filelists_db                                               |  12 MB  00:00:00     
+extras/7/x86_64/filelists_db                                           | 224 kB  00:00:00     
+google-cloud-sdk/filelists                                             |  23 MB  00:00:01     
+google-compute-engine/filelists                                        | 4.1 kB  00:00:00     
+remi-php72/filelists_db                                                | 159 kB  00:00:00     
+remi-safe/filelists_db                                                 | 1.4 MB  00:00:00     
+updates/7/x86_64/filelists_db                                          | 2.7 MB  00:00:00     
+policycoreutils-python-2.5-34.el7.x86_64 : SELinux policy core python utilities
+Repo        : base
+Matched from:
+Filename    : /usr/sbin/semanage
+
+[root@owncloud m3t]# yum install policycoreutils-python -y
+Loaded plugins: fastestmirror
+Loading mirror speeds from cached hostfile
+ * base: mirror.us.oneandone.net
+ * epel: mirror.steadfastnet.com
+ * extras: repos.forethought.net
+ * remi-php72: mirror.team-cymru.com
+ * remi-safe: mirror.team-cymru.com
+ * updates: centosc9.centos.org
+Resolving Dependencies
+--&gt; Running transaction check
+---&gt; Package policycoreutils-python.x86_64 0:2.5-34.el7 will be installed
+
+---&gt; Package python-IPy.noarch 0:0.75-6.el7 will be installed
+---&gt; Package setools-libs.x86_64 0:3.3.8-4.el7 will be installed
+--&gt; Finished Dependency Resolution
+
+Dependencies Resolved
+
+==============================================================================================
+ Package                          Arch             Version               Repository      Size
+==============================================================================================
+Installing:
+ policycoreutils-python           x86_64           2.5-34.el7            base           457 k
+Installing for dependencies:
+ audit-libs-python                x86_64           2.8.5-4.el7           base            76 k
+ checkpolicy                      x86_64           2.5-8.el7             base           295 k
+ libcgroup                        x86_64           0.41-21.el7           base            66 k
+ libsemanage-python               x86_64           2.5-14.el7            base           113 k
+ python-IPy                       noarch           0.75-6.el7            base            32 k
+ setools-libs                     x86_64           3.3.8-4.el7           base           620 k
+
+Transaction Summary
+==============================================================================================
+Install  1 Package (+6 Dependent packages)
+....
+
+Running transaction check
+Running transaction test
+Transaction test succeeded
+...                                   
+  Verifying  : libcgroup-0.41-21.el7.x86_64                                               7/7 
+
+Installed:
+  policycoreutils-python.x86_64 0:2.5-34.el7                                                  
+
+Dependency Installed:
+  audit-libs-python.x86_64 0:2.8.5-4.el7        checkpolicy.x86_64 0:2.5-8.el7               
+  libcgroup.x86_64 0:0.41-21.el7                libsemanage-python.x86_64 0:2.5-14.el7       
+  python-IPy.noarch 0:0.75-6.el7                setools-libs.x86_64 0:3.3.8-4.el7
+  </code></pre>
+                                                                                                             
+<pre><code class="language-bash">
+
+([root@owncloud m3t]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/data'
+[root@owncloud m3t]# restorecon '/var/www/html/owncloud/data'
+[root@owncloud m3t]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/config'
+[root@owncloud m3t]# restorecon '/var/www/html/owncloud/config'
+[root@owncloud m3t]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/apps'
+[root@owncloud m3t]# restorecon '/var/www/html/owncloud/apps'
+[root@owncloud m3t]# semanage fcontext -a -t httpd_sys_rw_content_t '/var/www/html/owncloud/apps-external(/.*)?'
+[root@owncloud m3t]# restorecon -Rv '/var/www/html/owncloud/'
+</code></pre>
+
+    </div>
+
+    <div class="container mt-3">
+
+<h3>Tarayıcı üzerindeki işlemler</h3>
+
+
+
+Terminal üzerindeki kurulum işlemleri bittikten sonra "systemctl reset httpd" komutu ile Apache web server resetleyip tarayıcımızdan http://34.69.43.29/owncloud/ (ip adresimiz Google Clouddaki harici ipmiz) yazarak giriş yapıyoruz. Giriş yaptıktan sonra kullanıcı ve veri tabanı bilgilerini girerek kurulum işlemini bitiriyoruz.
+
+
+    </div>
+
+   <div class="container mt-3">
+<picture>
+  <source media="(min-width:650px)" srcset="2.resim.jpg">
+  <source media="(min-width:465px)" srcset="2.resim.jpg">
+  <img src="2.resim.jpg" alt="Flowers" style="width:auto;">
+</picture>
+
+    </div>
+    
+
+   <div class="container mt-3">
+	   
+<picture>
+  <source media="(min-width:650px)" srcset="3.resim.jpg">
+  <source media="(min-width:465px)" srcset="3.resim.jpg">
+  <img src="3.resim.jpg" alt="Flowers" style="width:auto;">
+</picture>
+	
+    </div>
+
+    <div class="container mt-3">
+
+
+<h1>Kaynaklar</h1>
+
+<hr width="100%" color="black" size="4">
+
+<h3>Google Cloud kaynakları (erişim tarihi:04.01.2021) </h3>
+
+
+<hr width="100%" color="black" size="4">
+
+
+<p><a href="https://cloud.google.com">https://cloud.google.com</a></p>
+
+
+<hr width="100%" color="black" size="4">
+
+
+<h3>Apache server kaynakları (erişim tarihi:04.01.2021)</h3>
+
+<hr width="100%" color="black" size="4">
+
+<p><a href="https://httpd.apache.org/docs/2.4/install.html">https://httpd.apache.org/docs/2.4/install.html</a></p>
+
+<hr width="100%" color="black" size="4">
+
+<h3>Owncloud kaynakları (erişim tarihi:04.01.2021)</h3>
+
+
+<hr width="100%" color="black" size="4">
+
+<p><a href="https://tr.wikipedia.org/wiki/OwnCloud
+">https://tr.wikipedia.org/wiki/OwnCloud
+</a></p>
+
+
+<p><a href="https://doc.owncloud.com/server/admin_manual/installation/selinux_configuration.html
+">https://doc.owncloud.com/server/admin_manual/installation/selinux_configuration.html
+</a></p>
+
+
+<p><a href="https://owncloud.com/download-server/">https://owncloud.com/download-server</a></p>
+
+<p><a href="">
+</a></p>
+
+<p><a href="https://download.owncloud.org/download/repositories/production/owncloud/">https://download.owncloud.org/download/repositories/production/owncloud</a></p>
+
+
+<p><a href="https://owncloud.com/faq">https://owncloud.com/faq</a></p>
+
+<hr width="100%" color="black" size="4">
+
+
+<h3> Mariadb kaynakları (erişim tarihi:04.01.2021) </h3>
+
+<hr width="100%" color="black" size="4">
+
+
+<p><a href="https://mariadb.com/kb/en/mariadb-package-repository-setup-and-usage
+">https://mariadb.com/kb/en/mariadb-package-repository-setup-and-usage
+</a></p>
+
+
+<p><a href="https://mariadb.com/kb/en/starting-and-stopping-mariadb-automatically
+">https://mariadb.com/kb/en/starting-and-stopping-mariadb-automatically</a></p>
+
+
+<p><a href="https://mariadb.com/kb/en/securing-mariadb">https://mariadb.com/kb/en/securing-mariadb</a></p>
+
+
+<p><a href="https://mariadb.com/kb/en/mysql_secure_installation
+">https://mariadb.com/kb/en/mysql_secure_installation</a></p>
+
+<hr>
+
+<h3>Yararlandığım Kaynaklar (erişim tarihi:04.01.2021)</h3>
+
+
+
+<hr width="100%" color="black" size="4">
+
+<p><a href="https://alisezisli.com.tr/centos-7-uzerine-wordpress-kurulumu">https://alisezisli.com.tr/centos-7-uzerine-wordpress-kurulumu</a></p>
+
+<p><a href="https://www.linuxtechi.com/steps-to-install-owncloud-on-centos-7">https://www.linuxtechi.com/steps-to-install-owncloud-on-centos-7</a></p>
+
+
+<hr width="100%" color="black" size="4">
+
+
+
+<p><a href=""></a></p>
+
+    </div>
+
+
+<script>
+function myFunction() {
+   var element = document.body;
+   element.classList.toggle("dark-mode");
+}
+</script>
+
+
+</body></html>
+                                    
+                                    
+                                </article>
+                            
+                        
+                    
+                        
+                            
+                                <article id="rich-content">
+                                    <h2 class="major">Rich Content</h2>
+                                    <span class="image main"><img src="" alt="" /></span>
+                                    <p>Hugo ships with several <a href="https://gohugo.io/content-management/shortcodes/#use-hugos-built-in-shortcodes">Built-in Shortcodes</a> for rich content, along with a <a href="https://gohugo.io/about/hugo-and-gdpr/">Privacy Config</a> and a set of Simple Shortcodes that enable static and no-JS versions of various social media embeds.</p>
+<hr>
+<h2 id="youtube-privacy-enhanced-shortcode">YouTube Privacy Enhanced Shortcode</h2>
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube-nocookie.com/embed/ZJthWmvUzzc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+<!-- raw HTML omitted -->
+<hr>
+<h2 id="twitter-simple-shortcode">Twitter Simple Shortcode</h2>
+
+
+
+
+<style type="text/css">
+  .twitter-tweet {
+  font: 14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+  border-left: 4px solid #2b7bb9;
+  padding-left: 1.5em;
+  color: #555;
+}
+  .twitter-tweet a {
+  color: #2b7bb9;
+  text-decoration: none;
+}
+  blockquote.twitter-tweet a:hover,
+  blockquote.twitter-tweet a:focus {
+  text-decoration: underline;
+}
+</style>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">“In addition to being more logical, asymmetry has the advantage that its complete appearance is far more optically effective than symmetry.”<br>— Jan Tschichold <a href="https://t.co/gcv7SrhvJb">pic.twitter.com/gcv7SrhvJb</a></p>&mdash; Graphic Design History (@DesignReviewed) <a href="https://twitter.com/DesignReviewed/status/1085870671291310081?ref_src=twsrc%5Etfw">January 17, 2019</a></blockquote>
+
+<!-- raw HTML omitted -->
+<hr>
+<h2 id="vimeo-simple-shortcode">Vimeo Simple Shortcode</h2>
+
+
+
+
+
+
+<style>
+.__h_video {
+   position: relative;
+   padding-bottom: 56.23%;
+   height: 0;
+   overflow: hidden;
+   width: 100%;
+   background: #000;
+}
+.__h_video img {
+   width: 100%;
+   height: auto;
+   color: #000;
+}
+.__h_video .play {
+   height: 72px;
+   width: 72px;
+   left: 50%;
+   top: 50%;
+   margin-left: -36px;
+   margin-top: -36px;
+   position: absolute;
+   cursor: pointer;
+}
+</style>
+
+
+<div class="s_video_simple __h_video">
+<a href="https://vimeo.com/4.8912912e&#43;07" rel="noopener" target="_blank">
+
+
+<img src="https://i.vimeocdn.com/video/337401969_640.jpg" srcset="https://i.vimeocdn.com/video/337401969_640.jpg 1x, https://i.vimeocdn.com/video/337401969.jpg 2x" alt="Sing Jan Swing - Kinetic Type">
+<div class="play"><svg version="1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 61 61"><circle cx="30.5" cy="30.5" r="30.5" opacity=".8" fill="#000"></circle><path d="M25.3 19.2c-2.1-1.2-3.8-.2-3.8 2.2v18.1c0 2.4 1.7 3.4 3.8 2.2l16.6-9.1c2.1-1.2 2.1-3.2 0-4.4l-16.6-9z" fill="#fff"></path></svg></div></a></div>
+                                </article>
+                            
+                        
+                    
+                        
+                            
+                                <article id="placeholder-text">
+                                    <h2 class="major">Placeholder Text</h2>
+                                    <span class="image main"><img src="" alt="" /></span>
+                                    <p>Lorem est tota propiore conpellat pectoribus de pectora summo.</p>
+<p>Redit teque digerit hominumque toris verebor lumina non cervice subde tollit usus habet Arctonque, furores quas nec ferunt. Quoque montibus nunc caluere tempus inhospita parcite confusaque translucet patri vestro qui optatis lumine cognoscere flos nubis! Fronde ipsamque patulos Dryopen deorum.</p>
+<ol>
+<li>Exierant elisi ambit vivere dedere</li>
+<li>Duce pollice</li>
+<li>Eris modo</li>
+<li>Spargitque ferrea quos palude</li>
+</ol>
+<p>Rursus nulli murmur; hastile inridet ut ab gravi sententia! Nomine potitus silentia flumen, sustinet placuit petis in dilapsa erat sunt. Atria tractus malis.</p>
+<ol>
+<li>Comas hunc haec pietate fetum procerum dixit</li>
+<li>Post torum vates letum Tiresia</li>
+<li>Flumen querellas</li>
+<li>Arcanaque montibus omnes</li>
+<li>Quidem et</li>
+</ol>
+<h1 id="vagus-elidunt">Vagus elidunt</h1>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><a href="https://en.wikipedia.org/wiki/Canons_of_page_construction#Van_de_Graaf_canon">The Van de Graaf Canon</a></p>
+<h2 id="mane-refeci-capiebant-unda-mulcebat">Mane refeci capiebant unda mulcebat</h2>
+<p>Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat collumque vulnus est, parvas. <strong>Faces illo pepulere</strong> tempus adest. Tendit flamma, ab opes virum sustinet, sidus sequendo urbis.</p>
+<p>Iubar proles corpore raptos vero auctor imperium; sed et huic: manus caeli Lelegas tu lux. Verbis obstitit intus oblectamina fixis linguisque ausus sperare Echionides cornuaque tenent clausit possit. Omnia putatur. Praeteritae refert ausus; ferebant e primus lora nutat, vici quae mea ipse. Et iter nil spectatae vulnus haerentia iuste et exercebat, sui et.</p>
+<p>Eurytus Hector, materna ipsumque ut Politen, nec, nate, ignari, vernum cohaesit sequitur. Vel <strong>mitis temploque</strong> vocatus, inque alis, <em>oculos nomen</em> non silvis corpore coniunx ne displicet illa. Crescunt non unus, vidit visa quantum inmiti flumina mortis facto sic: undique a alios vincula sunt iactata abdita! Suspenderat ego fuit tendit: luna, ante urbem Propoetides <strong>parte</strong>.</p>
+
+<style>
+.canon { background: white; width: 100%; height: auto; }
+</style>
+                                </article>
+                            
+                        
+                    
+                        
+                            
+                                <article id="math-typesetting">
+                                    <h2 class="major">Math Typesetting</h2>
+                                    <span class="image main"><img src="" alt="" /></span>
+                                    <p>Mathematical notation in a Hugo project can be enabled by using third party JavaScript libraries.</p>
+<p>In this example we will be using <a href="https://katex.org/">KaTeX</a></p>
+<ul>
+<li>Create a partial under <code>/layouts/partials/math.html</code></li>
+<li>Within this partial reference the <a href="https://katex.org/docs/autorender.html">Auto-render Extension</a> or host these scripts locally.</li>
+<li>Include the partial in your templates like so:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">{{</span> <span style="color:#66d9ef">if</span> or .Params.math .Site.Params.math <span style="color:#f92672">}}</span>
+<span style="color:#f92672">{{</span> partial <span style="color:#e6db74">&#34;math.html&#34;</span> . <span style="color:#f92672">}}</span>
+<span style="color:#f92672">{{</span> end <span style="color:#f92672">}}</span>
+</code></pre></div><ul>
+<li>To enable KaTex globally set the parameter <code>math</code> to <code>true</code> in a project&rsquo;s configuration</li>
+<li>To enable KaTex on a per page basis include the parameter <code>math: true</code> in content files</li>
+</ul>
+<p><strong>Note:</strong> Use the online reference of <a href="https://katex.org/docs/supported.html">Supported TeX Functions</a></p>
+
+
+<!-- KaTeX -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css" integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js" integrity="sha384-y23I5Q6l+B6vatafAwxRu/0oK/79VlbSz7Q9aiSZUvyWYIYsd+qj+o24G5ZU2zJz" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+<h3 id="examples">Examples</h3>
+
+<p>
+Inline math: \(\varphi = \dfrac{1+\sqrt5}{2}= 1.6180339887…\)
+</p>
+
+<p>Block math:
+$$
+\varphi = 1+\frac{1} {1+\frac{1} {1+\frac{1} {1+\cdots} } }
+$$</p>
+                                </article>
+                            
+                        
+                    
+                        
+                            
+                                <article id="emoji-support">
+                                    <h2 class="major">Emoji Support</h2>
+                                    <span class="image main"><img src="" alt="" /></span>
+                                    <p>Emoji can be enabled in a Hugo project in a number of ways.</p>
+<p>The <a href="https://gohugo.io/functions/emojify/"><code>emojify</code></a> function can be called directly in templates or <a href="https://gohugo.io/templates/shortcode-templates/#inline-shortcodes">Inline Shortcodes</a>.</p>
+<p>To enable emoji globally, set <code>enableEmoji</code> to <code>true</code> in your site&rsquo;s <a href="https://gohugo.io/getting-started/configuration/">configuration</a> and then you can type emoji shorthand codes directly in content files; e.g.</p>
+<!-- raw HTML omitted -->
+<p>The <a href="http://www.emoji-cheat-sheet.com/">Emoji cheat sheet</a> is a useful reference for emoji shorthand codes.</p>
+<hr>
+<p><strong>N.B.</strong> The above steps enable Unicode Standard emoji characters and sequences in Hugo, however the rendering of these glyphs depends on the browser and the platform. To style the emoji you can either use a third party emoji font or a font stack; e.g.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">.emoji {
+  font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
+}</code></pre></div>
+
+<style>
+.emojify {
+	font-family: Apple Color Emoji, Segoe UI Emoji, NotoColorEmoji, Segoe UI Symbol, Android Emoji, EmojiSymbols;
+	font-size: 2rem;
+	vertical-align: middle;
+}
+@media screen and (max-width:650px) {
+  .nowrap {
+    display: block;
+    margin: 25px 0;
+  }
+}
+</style>
+                                </article>
+                            
+                        
+                    
+
+                </div>
+
+                
+<footer id="footer">
+    <p class="copyright">&copy; Design: <a href="https://github.com/d-asnaghi">d-asnaghi</a> and <a href="https://html5up.net">HTML5 UP</a>.</p>
+</footer>
+
+        </div>
+
+    
+    <div id="bg"></div>
 
 </body>
 
